@@ -7,7 +7,8 @@
     "prebuild": "rimraf ./build",
     "build": "tsc -p tsconfig.json",
     "start": "cross-env NODE_ENV=production node --enable-source-maps build/index.js",
-    "dev:start": "cross-env NODE_ENV=development nodemon --config nodemon.json --inspect -r dotenv/config build/index.js"
+    "dev:start": "cross-env NODE_ENV=development nodemon --config nodemon.json --inspect -r dotenv/config build/index.js",
+    "test": "cross-env NODE_ENV=development tap --ts test/**/*.ts"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +31,7 @@
     "fastify-tsconfig": "^1.0.1",
     "nodemon": "^2.0.15",
     "pino-pretty": "^7.6.0",
+    "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "tap": "^16.0.1",
     "ts-node": "^10.7.0",
