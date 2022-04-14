@@ -1,15 +1,32 @@
-import fastify from "fastify";
+import Fastify from "fastify";
+import { FastifyServerOptions } from "fastify";
 
-const server = fastify();
+import app from "./app";
 
-server.get("/ping", async (request, reply) => {
-  return "pong\n";
-});
+const config: FastifyServerOptions = {
+  logger: {
+    prettyPrint: process.env.NODE_ENV !== "production",
+    level: process.env.LOG_LEVEL,
+  },
+  trustProxy: true,
+  ajv: {
+    customOptions: {
+      allErrors: true,
+    },
+  },
+};
 
-server.listen(8080, (err, address) => {
+const fastify = Fastify(config);
+
+fastify.register(app);
+
+const port = process.env.SERVER_PORT || 3000;
+const address = process.env.SERVER_ADDRESS || "127.0.0.1";
+
+fastify.listen(port, address, (err, address) => {
   if (err) {
-    console.error(err);
+    fastify.log.fatal(err);
     process.exit(1);
   }
-  console.log(`Server listening at ${address}`);
+  fastify.log.debug(`Server launched in '${process.env.NODE_ENV}' environment`);
 });
