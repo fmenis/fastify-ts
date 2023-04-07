@@ -1,0 +1,33 @@
+{
+  "name": "fastify-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p tsconfig.json",
+    "start": "node -r dotenv/config dist/index.js",
+    "clean": "rimraf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/env": "^4.2.0",
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.7.0",
+    "@sinclair/typebox": "^0.26.8",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.15.0",
+    "fastify-plugin": "^4.5.0",
+    "fluent-json-schema": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@types/tap": "^15.0.8",
+    "fastify-tsconfig": "^1.0.1",
+    "rimraf": "^4.4.1",
+    "tap": "^16.3.4",
+    "typescript": "^5.0.4"
+  }
+}
