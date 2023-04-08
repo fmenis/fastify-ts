@@ -4,6 +4,7 @@ import Env from "@fastify/env";
 import { sEnv } from "./utils/env.schema";
 import apiPlugin from "./routes/index";
 import swaggerPlugin from "./plugins/swagger.plugin";
+import prismaPlugin from "./plugins/prisma.plugin";
 
 // declare module "fastify" {
 //   interface FastifyInstance {
@@ -23,5 +24,6 @@ export default async function app(
   });
 
   await fastify.register(swaggerPlugin);
+  await fastify.register(prismaPlugin);
   await fastify.register(apiPlugin, { prefix: "/api" });
 }

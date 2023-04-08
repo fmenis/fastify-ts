@@ -11,15 +11,25 @@ declare module "fastify" {
 }
 
 async function userController(fastify: FastifyInstance) {
-  async function createUser(
-    params: createUserBodyType
-  ): Promise<createUserBodyType> {
-    const { firstName, age, email } = params;
+  const { prisma } = fastify;
+
+  async function createUser(params: createUserBodyType): Promise<any> {
+    const { firstName, email } = params;
+
+    // const newUser = await prisma.user.create({
+    //   data: {},
+    // });
+
+    const newUser = await prisma.user.create({
+      data: {
+        name: firstName,
+        email,
+      },
+    });
 
     return {
-      age,
-      firstName,
-      email,
+      ...newUser,
+      firstName: newUser.name,
     };
   }
 
