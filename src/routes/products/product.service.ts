@@ -5,11 +5,13 @@ import {
   createProductBodyType,
   productDetailsType,
 } from "./lib/product.schema";
-import { IProductService } from "./lib/product.interface";
 
 declare module "fastify" {
   interface FastifyInstance {
-    productService: IProductService;
+    productService: {
+      createProduct(params: createProductBodyType): Promise<productDetailsType>;
+      getProduct(params: { id: string }): Promise<productDetailsType>;
+    };
   }
 }
 
@@ -28,8 +30,23 @@ async function productService(fastify: FastifyInstance): Promise<void> {
     };
   }
 
+  async function getProduct(params: {
+    id: string;
+  }): Promise<productDetailsType> {
+    const { id } = params;
+
+    return {
+      id,
+      name: "Coffie maker",
+      qty: 32,
+      price: 20,
+      createdAt: "2023-04-08T10:44:33.226Z",
+    };
+  }
+
   fastify.decorate("productService", {
     createProduct,
+    getProduct,
   });
 }
 

@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
-import fp from "fastify-plugin";
 
-import createUser from "./create";
+import userRouter from "./user.router";
+import userController from "./user.controller";
 
-async function index(fastify: FastifyInstance) {
+export default async function index(fastify: FastifyInstance): Promise<void> {
   fastify.addHook("onRoute", (options) => {
     options.schema = {
       ...options.schema,
@@ -11,8 +11,8 @@ async function index(fastify: FastifyInstance) {
     };
   });
 
-  const prefix = "/v1/users";
-  fastify.register(createUser, { prefix });
-}
+  fastify.register(userController);
 
-export default fp(index);
+  const prefix = "/v1/users";
+  fastify.register(userRouter, { prefix });
+}

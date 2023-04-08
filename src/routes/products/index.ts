@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
-import createProduct from "./create";
+import createProduct from "./useCases/create";
 import productService from "./product.service";
+import readProduct from "./useCases/read";
 
 export default async function index(fastify: FastifyInstance): Promise<void> {
   fastify.addHook("onRoute", (options) => {
@@ -14,4 +15,5 @@ export default async function index(fastify: FastifyInstance): Promise<void> {
 
   const prefix = "/v1/products";
   fastify.register(createProduct, { prefix });
+  fastify.register(readProduct, { prefix });
 }

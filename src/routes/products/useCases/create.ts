@@ -4,7 +4,7 @@ import {
   createProductBodyType,
   productDetails,
   productDetailsType,
-} from "./lib/product.schema";
+} from "../lib/product.schema";
 
 export default async function createProduct(fastify: FastifyInstance) {
   const { productService } = fastify;
