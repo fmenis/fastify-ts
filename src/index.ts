@@ -1,6 +1,14 @@
 import Fastify from "fastify";
+import Env from "@fastify/env";
 
+import { configSchema, ConfigSchemaType } from "./utils/env.schema";
 import app from "./app";
+
+declare module "fastify" {
+  interface FastifyInstance {
+    config: ConfigSchemaType;
+  }
+}
 
 async function run() {
   const fastify = Fastify({
@@ -14,11 +22,18 @@ async function run() {
     },
   });
 
+  await fastify.register(Env, {
+    schema: configSchema,
+  });
+
   await fastify.register(app);
   await fastify.ready();
 
   try {
-    await fastify.listen({ port: 3000, host: "127.0.0.1" });
+    await fastify.listen({
+      port: fastify.config.SERVER_PORT,
+      host: fastify.config.SERVER_ADDRESS,
+    });
 
     fastify.log.debug(
       `Server launched in '${process.env.NODE_ENV}' environment`
